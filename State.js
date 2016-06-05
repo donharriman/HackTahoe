@@ -4,12 +4,6 @@ function Enum(constantsList) {
     }
 }
 
-/*
-let test = document.getElementById('state');
-console.log(test);
-
-test.innerHTML = processState.PRECHECK;
-*/
 
 //  contacts
 let front_counter = {
@@ -40,9 +34,9 @@ const eState = new Enum(['RECEIVED', 'ASSIGNED', 'REVIEW',
           
 let messages = [];
 messages[eState.RECEIVED] = 'The application has been received by TRPA, and will be assigned to a planner for review.';
-messages[eState.ASSIGNED] = 'The application has been assigned to ______. You will be notified by email if additional information is needed.';
+messages[eState.ASSIGNED] = 'The application has been assigned to a planner. You will be notified by email if additional information is needed.';
 messages[eState.REVIEW] = 'The application was determined to be complete and is currently under review.';
-messages[eState.CONDITIONAL] = 'The proposed project has been approved and a conditional permit has been issued. You are required to complete all "prior to acknowledgment" conditions. Once these conditions are completed, you will need to schedule an appointment with ____ to finalize your permit.';
+messages[eState.CONDITIONAL] = 'The proposed project has been approved and a conditional permit has been issued. You are required to complete all "prior to acknowledgment" conditions. Once these conditions are completed, you will need to schedule an appointment to finalize your permit.';
 messages[eState.APPROVAL] = 'Your project has been approved! You may now install temporary, construction BMPs on your project site. Once BMPs are in place, please contact Matt Miller, TRPA Compliance Inspector, to schedule an initial site inspection. Please be advised no construction, excavation, or demolition  may occur pior to an initial site inspection.';
 messages[eState.INSPECTION] = 'Congratulations, the project passed final inspection! Thank you for doing your part to protect Lake Tahoe.';
 messages[eState.DONE] = 'The project is complete. Any applicable refundable fees have been returned.';     
@@ -73,61 +67,31 @@ function buildProject() {
         state.status = status[ix];
         state.message = messages[ix];
         state.contact = contact[ix];
-        console.log(state);
+ //       console.log(state);
         states[ix] = state;
     }
     return states;
 }
-let project = buildProject();
-console.log(project);
+let projects = [];
+projects[0] = buildProject();
+projects[1] = buildProject();
+projects[2] = buildProject();
 
-/*
-let state = [];
+let alertProj = projects[1];
+alertProj[eState.ASSIGNED].alert = {
+    message: 'Application is Incomplete.',
+    todo: 'Please submit a traffic study. Your application will be marked as incomplete until this item is received.',
+};
 
-state[eState.RECEIVED] = {
-    status: 'Application received.',
-    message: '',
-    contact: front_counter,
-}
+alertProj[eState.APPROVAL].alert = {
+    message: 'Plan revision has been submitted.',
+    todo: 'Please refer to file number ERSP2016-xx.',
+};
 
-state[eState.ASSIGNED] = {
-    status: 'Assigned to a Planner.',
-    message: '',
-    contact: planner,
-}
+//console.log(alertProj[eState.ASSIGNED]);
+//console.log(alertProj[eState.APPROVAL]);
 
-state[eState.REVIEW] = {
-    status: 'In review.',
-    message: '',
-    contact: planner,
-}
-
-state[eState.CONDITIONAL] = {
-    status: 'Conditional Permit Issued.',
-    message: '',
-    contact: planner,
-}
-
-state[eState.APPROVAL] = {
-    status: 'Final Permit Approval.',
-    message: '',
-    contact: planner,
-}
-
-state[eState.INSPECTION] = {
-    status: 'Final Inspection.',
-    message: '',
-    contact: fees_admin,
-}
-
-state[eState.DONE] = {
-    status: 'Complete.',
-    message: '',
-    contact: planner
-}
+let withdrawnProj = projects[2];
+alertProj[eState.REVIEW].message = 'Project Withdrawn.';
 
 
-state.forEach( x =>
-    console.log(x)
-);
-*/
